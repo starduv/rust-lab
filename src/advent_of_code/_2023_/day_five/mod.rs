@@ -24,6 +24,9 @@ pub fn run() -> i64 {
         let mut map_index = 0usize;
         for line in include_str!("day_five.txt").lines() {
             if line.is_empty() {
+                maps[map_index].sort_by(|a, b| a[1].cmp(&b[1]));
+                println!("sorted entries {:?}", maps[map_index]);
+                println!("------------------------");
                 map_index += 1;
             } else {
                 let mut entry = line
@@ -36,6 +39,10 @@ pub fn run() -> i64 {
                 maps[map_index].push(entry);
             }
         }
+
+        maps[map_index].sort_by(|a, b| a[1].cmp(&b[1]));
+        println!("sorted entries {:?}", maps[map_index]);
+        println!("------------------------");
     }
 
     let mut lowest = std::i64::MAX;
