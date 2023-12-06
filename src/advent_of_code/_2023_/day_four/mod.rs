@@ -3,14 +3,14 @@ use std::{
     io::Error,
 };
 
-pub fn run() -> Result<u32, Error> {
+pub fn run() -> u32 {
     let mut sum = 0u32;
     let mut cache: HashMap<usize, u32> = HashMap::new();
     let lines: Vec<&str> = include_str!("day_four.txt").lines().collect();
     for index in 0..lines.len() {
         sum += find_winners(index, &lines, &mut cache);
     }
-    Ok(sum)
+    sum
 }
 
 fn find_winners(index: usize, lines: &Vec<&str>, cache: &mut HashMap<usize, u32>) -> u32 {
