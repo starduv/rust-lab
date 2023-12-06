@@ -3,6 +3,7 @@ mod day_four;
 mod day_one;
 mod day_three;
 mod day_two;
+mod day_six;
 
 #[cfg(test)]
 mod tests {
@@ -43,7 +44,15 @@ mod tests {
     fn day_five_passes() {
         assert_eq!(
             crate::advent_of_code::_2023_::day_five::run(),
-            61132754
+            11427375
+        );
+    }
+
+    #[test]
+    fn day_six_passes() {
+        assert_eq!(
+            crate::advent_of_code::_2023_::day_six::run(),
+            11427375
         );
     }
 }
