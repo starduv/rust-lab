@@ -44,7 +44,7 @@ mod tests {
     fn day_five_passes() {
         assert_eq!(
             crate::advent_of_code::_2023_::day_five::run(),
-            11427375
+            46294175
         );
     }
 

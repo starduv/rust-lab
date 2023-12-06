@@ -1,9 +1,13 @@
+mod brute_force;
+
 use std::vec;
 
-pub fn run() -> i64 {
+pub use brute_force::run as brute_force_run;
+
+pub fn run() -> u64 {
     // let mut seeds = vec![
-    // Seed::new(0, 79i64, 79i64 + 14i64),
-    // Seed::new(0, 55i64, 55i64 + 13i64),
+    // Seed::new(0, 79u64, 79u64 + 14u64),
+    // Seed::new(0, 55u64, 55u64 + 13u64),
     // ];
     let mut seeds = vec![
         Seed::new(0, 2276375722, 2276375722 + 160148132 - 1),
@@ -18,21 +22,19 @@ pub fn run() -> i64 {
         Seed::new(0, 6434225, 6434225 + 291842774 - 1),
     ];
 
-    let mut maps: Vec<Vec<Vec<i64>>> = vec![Vec::new(); 7];
+    let mut maps: Vec<Vec<Vec<u64>>> = vec![Vec::new(); 7];
 
     {
         let mut map_index = 0usize;
         for line in include_str!("day_five.txt").lines() {
             if line.is_empty() {
                 maps[map_index].sort_by(|a, b| a[1].cmp(&b[1]));
-                println!("sorted entries {:?}", maps[map_index]);
-                println!("------------------------");
                 map_index += 1;
             } else {
                 let mut entry = line
                     .split_whitespace()
-                    .map(|s| s.parse::<i64>().unwrap())
-                    .collect::<Vec<i64>>();
+                    .map(|s| s.parse::<u64>().unwrap())
+                    .collect::<Vec<u64>>();
 
                 entry[2] = entry[1] + entry[2] - 1;
 
@@ -41,11 +43,9 @@ pub fn run() -> i64 {
         }
 
         maps[map_index].sort_by(|a, b| a[1].cmp(&b[1]));
-        println!("sorted entries {:?}", maps[map_index]);
-        println!("------------------------");
     }
 
-    let mut lowest = std::i64::MAX;
+    let mut lowest = std::u64::MAX;
     while !seeds.is_empty() {
         let mut next = seeds.pop().unwrap();
         if next.map_index >= maps.len() {
@@ -88,12 +88,12 @@ pub fn run() -> i64 {
 struct Seed {
     range_found: bool,
     map_index: usize,
-    start: i64,
-    end: i64,
+    start: u64,
+    end: u64,
 }
 
 impl Seed {
-    fn new(map_index: usize, start: i64, end: i64) -> Self {
+    fn new(map_index: usize, start: u64, end: u64) -> Self {
         Seed {
             map_index,
             start,
