@@ -52,21 +52,18 @@ pub fn run() -> u64 {
         for entry in &maps[next.map_index] {
             if next.start <= entry[2] && next.end >= entry[1] {
                 if next.start < entry[1] {
-                    let new_seed = Seed::new(next.map_index, next.start, entry[1] - 1);
-                    seeds.push(new_seed);
+                    seeds.push(Seed::new(next.map_index, next.start, entry[1] - 1));
                 }
 
                 if next.end > entry[2] {
-                    let new_seed = Seed::new(next.map_index, entry[2] + 1, next.end);
-                    seeds.push(new_seed);
+                    seeds.push(Seed::new(next.map_index, entry[2] + 1, next.end));
                 }
 
                 let diff_start = std::cmp::max(next.start, entry[1]);
                 let diff_end = std::cmp::min(next.end, entry[2]);
                 let next_start = entry[0] + diff_start - entry[1];
                 let next_end = next_start + diff_end - diff_start;
-                let new_seed = Seed::new(next.map_index + 1, next_start, next_end);
-                seeds.push(new_seed);
+                seeds.push(Seed::new(next.map_index + 1, next_start, next_end));
 
                 next.range_found = true;
 
