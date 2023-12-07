@@ -5,10 +5,6 @@ use std::vec;
 pub use brute_force::run as brute_force_run;
 
 pub fn run() -> u64 {
-    // let mut seeds = vec![
-    // Seed::new(0, 79u64, 79u64 + 14u64),
-    // Seed::new(0, 55u64, 55u64 + 13u64),
-    // ];
     let mut seeds = vec![
         Seed::new(0, 2276375722, 2276375722 + 160148132 - 1),
         Seed::new(0, 3424292843, 3424292843 + 82110297 - 1),
@@ -56,18 +52,21 @@ pub fn run() -> u64 {
         for entry in &maps[next.map_index] {
             if next.start <= entry[2] && next.end >= entry[1] {
                 if next.start < entry[1] {
-                    seeds.push(Seed::new(next.map_index + 1, next.start, entry[1] - 1));
+                    let new_seed = Seed::new(next.map_index, next.start, entry[1] - 1);
+                    seeds.push(new_seed);
                 }
 
                 if next.end > entry[2] {
-                    seeds.push(Seed::new(next.map_index + 1, entry[2] + 1, next.end));
+                    let new_seed = Seed::new(next.map_index, entry[2] + 1, next.end);
+                    seeds.push(new_seed);
                 }
 
                 let diff_start = std::cmp::max(next.start, entry[1]);
                 let diff_end = std::cmp::min(next.end, entry[2]);
                 let next_start = entry[0] + diff_start - entry[1];
                 let next_end = next_start + diff_end - diff_start;
-                seeds.push(Seed::new(next.map_index + 1, next_start, next_end));
+                let new_seed = Seed::new(next.map_index + 1, next_start, next_end);
+                seeds.push(new_seed);
 
                 next.range_found = true;
 
