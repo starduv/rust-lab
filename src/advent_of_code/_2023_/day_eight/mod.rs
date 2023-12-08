@@ -41,6 +41,7 @@ pub fn run() -> usize {
     }
 
     match gcf {
+        // leat common multiple!
         Some(gcf) => steps[1..].iter().map(|step| step / gcf).product::<usize>() * steps[0],
         None => 0,
     }
