@@ -1,7 +1,4 @@
-use std::{
-    collections::{HashMap, HashSet},
-    io::Error,
-};
+use std::collections::{HashMap, HashSet};
 
 pub fn run() -> u32 {
     let mut sum = 0u32;
