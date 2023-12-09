@@ -1,4 +1,4 @@
-use std::collections::{VecDeque, vec_deque};
+use std::collections::VecDeque;
 
 pub fn run() -> i32 {
     let mut readings = include_str!("day_nine.txt")
