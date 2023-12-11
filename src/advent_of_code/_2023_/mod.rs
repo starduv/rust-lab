@@ -1,4 +1,5 @@
 mod day_eight;
+mod day_eleven;
 mod day_five;
 mod day_four;
 mod day_nine;
@@ -70,5 +71,10 @@ mod tests {
     fn day_ten_passes() {
         // assert_eq!(crate::advent_of_code::_2023_::day_ten::part_one::run(), 114);
         assert_eq!(crate::advent_of_code::_2023_::day_ten::part_two::run(), 114);
+    }
+
+    #[test]
+    fn day_eleven_passes() {
+        assert_eq!(crate::advent_of_code::_2023_::day_eleven::run(), 374);
     }
 }

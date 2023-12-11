@@ -40,9 +40,8 @@ pub fn run() -> u32 {
         .collect::<Vec<Vec<&Feature>>>();
 
     let start = start.unwrap();
-    let mut distance = vec![vec![0; map.len()]; map.len()];
-    distance[start[0] as usize][start[1] as usize] = 0;
-
+    let mut layout = vec![vec![0; map.len()]; map.len()];
+    layout[start[0] as usize][start[1] as usize] = 1;
     let mut stack = vec![
         (start, [north[0] + start[0], north[1] + start[1]]),
         (start, [south[0] + start[0], south[1] + start[1]]),
@@ -61,29 +60,31 @@ pub fn run() -> u32 {
                 let first = [first[0] + to[0], first[1] + to[1]];
                 let second = [second[0] + to[0], second[1] + to[1]];
                 if first.eq(&from) {
-                    let prev_dist = distance[from[0] as usize][from[1] as usize];
-                    let curr_dist = distance[to[0] as usize][to[1] as usize];
-                    distance[to[0] as usize][to[1] as usize] = match curr_dist {
-                        0 => prev_dist + 1,
-                        _ => std::cmp::min(curr_dist, prev_dist + 1),
-                    };
+                    layout[to[0] as usize][to[1] as usize] = 1;
                     stack.push((to, second));
                 }
 
                 if second.eq(&from) {
-                    let prev_dist = distance[from[0] as usize][from[1] as usize];
-                    let curr_dist = distance[to[0] as usize][to[1] as usize];
-                    distance[to[0] as usize][to[1] as usize] = match curr_dist {
-                        0 => prev_dist + 1,
-                        _ => std::cmp::min(curr_dist, prev_dist + 1),
-                    };
+                    layout[to[0] as usize][to[1] as usize] = 1;
                     stack.push((to, first));
                 }
             }
         }
     }
 
-    *distance.iter().flatten().max().unwrap()
+    let mut enclosed = 0;
+    let size = layout.len();
+    for row in 0..size {
+        for col in 0..size {
+            if layout[row][col] == 0 && is_enclosed(row, col, &layout) {
+                enclosed += 1;
+            }
+        }
+    }
+
+    println!("{layout:?}");
+
+    *layout.iter().flatten().max().unwrap()
 }
 
 #[derive(Debug)]
@@ -91,4 +92,8 @@ enum Feature {
     Pipe([isize; 2], [isize; 2]),
     Ground,
     Start,
+}
+
+fn is_enclosed(row: usize, col: usize, layout: &Vec<Vec<u32>>) -> bool {
+    false
 }
